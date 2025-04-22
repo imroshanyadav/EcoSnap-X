@@ -16,6 +16,7 @@ export default function Home() {
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                 EcoSnap X – Unified Smart Waste Assistant
               </h1>
+              <span>Clean Today Green Tomorrow </span>
               <p className="text-muted-foreground md:text-xl">
                 Detect, classify, and properly dispose of waste with our AI-powered platform. Join the community making
                 our planet cleaner.
