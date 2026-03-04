@@ -40,7 +40,13 @@ Join the community making our planet cleaner.
 ```bash
 git clone https://github.com/imroshanyadav/EcoSnap-X.git
 cd EcoSnap-X
-npm install
+npm install --legacy-peer-deps
+
+# Configure API Keys
+cp .env.example .env.local
+# Edit .env.local and add your Google Gemini API key
+# Get a free key from: https://aistudio.google.com/app/apikey
+
 npm run dev
 ```
 

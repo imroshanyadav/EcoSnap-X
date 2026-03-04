@@ -6,10 +6,13 @@ import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Camera, Upload, Mic, RefreshCw, Check, Info } from "lucide-react"
+import { Camera, Upload, Mic, RefreshCw, Check, Info, AlertCircle } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { classifyWaste } from "@/lib/huggingface"
+import { classifyWasteWithGemini } from "@/lib/gemini"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export default function DetectPage() {
   const [activeTab, setActiveTab] = useState("camera")
@@ -19,8 +22,10 @@ export default function DetectPage() {
     confidence: number
     instructions: string
     recyclable: boolean
+    description?: string
   }>(null)
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -72,52 +77,20 @@ export default function DetectPage() {
     }
   }
 
-  const detectWaste = (imageUrl: string) => {
+  const detectWaste = async (imageUrl: string) => {
     setIsDetecting(true)
+    setError(null)
 
-    // Simulate AI detection with a timeout
-    setTimeout(() => {
-      // Mock detection results
-      const wasteTypes = [
-        {
-          type: "Plastic Bottle",
-          confidence: 94,
-          instructions: "Clean, remove cap, and place in the blue recycling bin. Caps can be recycled separately.",
-          recyclable: true,
-        },
-        {
-          type: "Glass Container",
-          confidence: 89,
-          instructions: "Rinse thoroughly and place in the green glass recycling bin. Remove any non-glass components.",
-          recyclable: true,
-        },
-        {
-          type: "Food Waste",
-          confidence: 92,
-          instructions: "Place in compost bin or organic waste collection. Not suitable for regular recycling.",
-          recyclable: false,
-        },
-        {
-          type: "Aluminum Can",
-          confidence: 97,
-          instructions: "Rinse and place in the metal recycling bin. Crush if possible to save space.",
-          recyclable: true,
-        },
-        {
-          type: "E-Waste (Battery)",
-          confidence: 88,
-          instructions:
-            "Do not place in regular trash. Take to designated e-waste collection point or hazardous waste facility.",
-          recyclable: false,
-        },
-      ]
-
-      // Select a random waste type for the demo
-      const result = wasteTypes[Math.floor(Math.random() * wasteTypes.length)]
-
+    try {
+      // Use Gemini API for better waste classification
+      const result = await classifyWasteWithGemini(imageUrl)
       setDetectionResult(result)
+    } catch (err) {
+      console.error("Detection error:", err)
+      setError(err instanceof Error ? err.message : "Failed to classify waste. Please try again.")
+    } finally {
       setIsDetecting(false)
-    }, 2000)
+    }
   }
 
   const resetDetection = () => {
@@ -267,6 +240,13 @@ export default function DetectPage() {
             </div>
           )}
 
+          {error && (
+            <Alert variant="destructive" className="mt-6">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
           {detectionResult && (
             <div className="mt-6 border rounded-lg p-4">
               <div className="flex items-center justify-between mb-4">
@@ -275,6 +255,14 @@ export default function DetectPage() {
                   {detectionResult.recyclable ? "Recyclable" : "Not Recyclable"}
                 </Badge>
               </div>
+              
+              {detectionResult.description && (
+                <div className="mb-4 p-3 bg-muted rounded-lg">
+                  <p className="text-sm font-medium mb-1">What we see:</p>
+                  <p className="text-sm text-muted-foreground">{detectionResult.description}</p>
+                </div>
+              )}
+              
               <div className="flex items-center mb-2">
                 <div className="text-sm font-medium mr-2">Confidence:</div>
                 <div className="flex-1">
@@ -285,7 +273,10 @@ export default function DetectPage() {
               <Separator className="my-4" />
               <div className="flex items-start gap-2 mt-4">
                 <Info className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
-                <p className="text-sm">{detectionResult.instructions}</p>
+                <div>
+                  <p className="text-sm font-medium mb-1">Disposal Instructions:</p>
+                  <p className="text-sm">{detectionResult.instructions}</p>
+                </div>
               </div>
             </div>
           )}
