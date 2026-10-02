@@ -10,16 +10,18 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-4">
-              <div className="inline-block px-3 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-sm font-medium mb-2">
-                AI-Powered Waste Management
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-sm font-medium mb-2">
+                <span>🤖 Deep Learning Powered</span>
+                <span>•</span>
+                <span>100% Free & Local</span>
               </div>
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                 EcoSnap X – Unified Smart Waste Assistant
               </h1>
-              <span>Clean Today Green Tomorrow </span>
+              <span className="text-green-600 font-semibold">Clean Today, Green Tomorrow 🌍♻️</span>
               <p className="text-muted-foreground md:text-xl">
-                Detect, classify, and properly dispose of waste with our AI-powered platform. Join the community making
-                our planet cleaner.
+                Detect, classify, and properly dispose of waste using our real YOLOv8 deep learning model. 
+                Zero API keys required. Join the community making our planet cleaner, one snap at a time.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
@@ -73,9 +75,9 @@ export default function Home() {
               <div className="p-3 rounded-full bg-green-100 dark:bg-green-900">
                 <Camera className="w-6 h-6 text-green-700 dark:text-green-300" />
               </div>
-              <h3 className="text-xl font-bold">AI Image Detection</h3>
+              <h3 className="text-xl font-bold">YOLOv8 Deep Learning</h3>
               <p className="text-center text-muted-foreground">
-                Detect and classify waste using your phone camera. Works with plastic, glass, metal, e-waste, and more.
+                Classifies waste into 6 Roboflow categories (Biodegradable, Cardboard, Glass, Metal, Paper, Plastic) with bounding boxes. 100% free with no API keys.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 p-6 border rounded-lg shadow-sm bg-card">

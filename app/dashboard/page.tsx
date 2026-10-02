@@ -14,7 +14,7 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("personal")
 
   // Mock data for personal stats
-  const personalStats = {
+  const [personalStats, setPersonalStats] = useState({
     totalItems: 127,
     weeklyStreak: 14,
     ecoPoints: 2450,
@@ -28,7 +28,30 @@ export default function DashboardPage() {
       { id: 4, type: "Paper Waste", date: "Yesterday, 1:20 PM", points: 5 },
       { id: 5, type: "E-Waste (Battery)", date: "Apr 20, 10:30 AM", points: 25 },
     ],
-  }
+  })
+
+  // Load dynamically logged waste from detect page
+  useState(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const storedLogs = localStorage.getItem("ecosnap_waste_logs")
+        const storedPoints = localStorage.getItem("ecosnap_total_points")
+        if (storedLogs) {
+          const parsed = JSON.parse(storedLogs)
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setPersonalStats((prev) => ({
+              ...prev,
+              totalItems: prev.totalItems + parsed.length,
+              ecoPoints: storedPoints ? parseInt(storedPoints, 10) : prev.ecoPoints,
+              recentActivity: [...parsed.slice(0, 5), ...prev.recentActivity.slice(0, Math.max(0, 5 - parsed.length))],
+            }))
+          }
+        }
+      } catch (e) {
+        console.warn("Error loading stored waste logs:", e)
+      }
+    }
+  })
 
   // Mock data for charts
   const wasteTypeData = [
