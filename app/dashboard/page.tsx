@@ -100,69 +100,119 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container py-8 md:py-12">
-      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+    <div className="container py-8 md:py-12 bg-cyber-grid min-h-screen">
+      {/* Dashboard Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 p-6 rounded-2xl glass-panel-glow border border-emerald-500/30">
+        <div>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
+              REAL-TIME ECO-TELEMETRY DASHBOARD
+            </span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight bg-gradient-to-r from-emerald-300 via-teal-200 to-white bg-clip-text text-transparent">
+            Waste Intelligence & Personal Impact
+          </h1>
+          <p className="text-xs text-muted-foreground mt-1">
+            Track your verified scans, dynamic eco-points, streak status, and community contributions.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className="px-4 py-2 rounded-xl bg-black/40 border border-emerald-500/30 text-right">
+            <div className="text-[10px] font-mono text-muted-foreground uppercase">Global Standing</div>
+            <div className="text-sm font-black text-amber-400 flex items-center gap-1 justify-end">
+              <Trophy className="h-4 w-4" />
+              <span>Rank #5 • Eco-Warrior</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <Tabs defaultValue="personal" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full max-w-md grid-cols-2 mb-8">
-          <TabsTrigger value="personal">Personal Stats</TabsTrigger>
-          <TabsTrigger value="community">Community Impact</TabsTrigger>
+        <TabsList className="grid w-full max-w-md grid-cols-2 mb-8 bg-black/40 border border-emerald-500/20 p-1 rounded-xl">
+          <TabsTrigger
+            value="personal"
+            className="data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950 data-[state=active]:font-bold rounded-lg transition-all"
+          >
+            Personal Telemetry
+          </TabsTrigger>
+          <TabsTrigger
+            value="community"
+            className="data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950 data-[state=active]:font-bold rounded-lg transition-all"
+          >
+            Community Impact
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="personal">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Total Items</CardTitle>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4 text-muted-foreground"
-                >
-                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                </svg>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{personalStats.totalItems}</div>
-                <p className="text-xs text-muted-foreground">+12 from last week</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Weekly Streak</CardTitle>
-                <Calendar className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{personalStats.weeklyStreak} days</div>
-                <p className="text-xs text-muted-foreground">Keep it up!</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Eco Points</CardTitle>
-                <Leaf className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{personalStats.ecoPoints}</div>
-                <p className="text-xs text-muted-foreground">+120 this week</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Current Rank</CardTitle>
-                <Trophy className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{personalStats.rank}</div>
-                <p className="text-xs text-muted-foreground">{personalStats.pointsToNextRank} points to next rank</p>
-              </CardContent>
-            </Card>
+            <div className="glass-card rounded-2xl p-5 border border-emerald-500/20 relative overflow-hidden group">
+              <div className="flex items-center justify-between pb-2">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-muted-foreground">
+                  Total Items Logged
+                </span>
+                <div className="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 group-hover:scale-110 transition-transform">
+                  <Leaf className="h-4 w-4" />
+                </div>
+              </div>
+              <div className="text-3xl font-black font-mono text-foreground mb-1">
+                {personalStats.totalItems}
+              </div>
+              <p className="text-xs text-emerald-400 font-mono flex items-center gap-1">
+                <TrendingUp className="h-3 w-3" />
+                <span>+12 verified this week</span>
+              </p>
+            </div>
+
+            <div className="glass-card rounded-2xl p-5 border border-emerald-500/20 relative overflow-hidden group">
+              <div className="flex items-center justify-between pb-2">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-muted-foreground">
+                  Eco-Streak
+                </span>
+                <div className="p-2 rounded-xl bg-amber-500/15 text-amber-400 group-hover:scale-110 transition-transform">
+                  <Calendar className="h-4 w-4" />
+                </div>
+              </div>
+              <div className="text-3xl font-black font-mono text-amber-400 mb-1">
+                {personalStats.weeklyStreak} Days
+              </div>
+              <p className="text-xs text-muted-foreground">🔥 Daily scanning habit active</p>
+            </div>
+
+            <div className="glass-card rounded-2xl p-5 border border-emerald-500/20 relative overflow-hidden group">
+              <div className="flex items-center justify-between pb-2">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-muted-foreground">
+                  Earned Eco-Points
+                </span>
+                <div className="p-2 rounded-xl bg-teal-500/15 text-teal-400 group-hover:scale-110 transition-transform">
+                  <Award className="h-4 w-4" />
+                </div>
+              </div>
+              <div className="text-3xl font-black font-mono text-emerald-300 mb-1">
+                {personalStats.ecoPoints.toLocaleString()}
+              </div>
+              <p className="text-xs text-emerald-400 font-mono">+120 pts from latest scans</p>
+            </div>
+
+            <div className="glass-card rounded-2xl p-5 border border-emerald-500/20 relative overflow-hidden group">
+              <div className="flex items-center justify-between pb-2">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-muted-foreground">
+                  Current Rank
+                </span>
+                <div className="p-2 rounded-xl bg-cyan-500/15 text-cyan-400 group-hover:scale-110 transition-transform">
+                  <Trophy className="h-4 w-4" />
+                </div>
+              </div>
+              <div className="text-xl font-bold text-foreground mb-1">
+                {personalStats.rank}
+              </div>
+              <p className="text-xs text-muted-foreground font-mono">
+                {personalStats.pointsToNextRank} pts to Champion
+              </p>
+            </div>
           </div>
+
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <Card>

@@ -92,16 +92,39 @@ export default function MapPage() {
         )
 
   return (
-    <div className="container py-8 md:py-12">
-      <h1 className="text-3xl font-bold mb-6">Recycling Map</h1>
+    <div className="container py-8 md:py-12 bg-cyber-grid min-h-screen">
+      {/* Map Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 p-6 rounded-2xl glass-panel-glow border border-emerald-500/30">
+        <div>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
+              REAL-TIME GEOSPATIAL RECYCLING DIRECTORY
+            </span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight bg-gradient-to-r from-emerald-300 via-teal-200 to-white bg-clip-text text-transparent">
+            Recycling Centers & Waste Hotspots
+          </h1>
+          <p className="text-xs text-muted-foreground mt-1">
+            Discover verified drop-off hubs, sort bins by accepted material types, and report neighborhood dump sites.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Badge variant="outline" className="border-emerald-500/40 text-emerald-400 font-mono text-xs px-3 py-1">
+            Active GPS Mapping
+          </Badge>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-6">
-          <Card>
+          <Card className="glass-panel border-emerald-500/25">
             <CardHeader>
               <CardTitle>Find Locations</CardTitle>
               <CardDescription>Search for recycling centers or report waste hotspots</CardDescription>
             </CardHeader>
+
             <CardContent>
               <div className="space-y-4">
                 <div className="flex gap-2">

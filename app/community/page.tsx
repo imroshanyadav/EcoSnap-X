@@ -127,24 +127,60 @@ export default function CommunityPage() {
   ]
 
   return (
-    <div className="container py-8 md:py-12">
-      <h1 className="text-3xl font-bold mb-6">Community</h1>
+    <div className="container py-8 md:py-12 bg-cyber-grid min-h-screen">
+      {/* Community Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 p-6 rounded-2xl glass-panel-glow border border-emerald-500/30">
+        <div>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
+              COMMUNITY ECO-NETWORK & VOLUNTEERS
+            </span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight bg-gradient-to-r from-emerald-300 via-teal-200 to-white bg-clip-text text-transparent">
+            Eco-Champions & Local Cleanups
+          </h1>
+          <p className="text-xs text-muted-foreground mt-1">
+            Connect with local NGOs, report illegal dumpsites, organize neighborhood cleanups, and share sustainable habits.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Badge variant="outline" className="border-emerald-500/40 text-emerald-400 font-mono text-xs px-3 py-1">
+            15,400+ Active Members
+          </Badge>
+        </div>
+      </div>
 
       <Tabs defaultValue="feed" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full max-w-md grid-cols-3 mb-8">
-          <TabsTrigger value="feed">Community Feed</TabsTrigger>
-          <TabsTrigger value="events">Events</TabsTrigger>
-          <TabsTrigger value="partners">NGO Partners</TabsTrigger>
+        <TabsList className="grid w-full max-w-md grid-cols-3 mb-8 bg-black/40 border border-emerald-500/20 p-1 rounded-xl">
+          <TabsTrigger
+            value="feed"
+            className="data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950 data-[state=active]:font-bold rounded-lg transition-all"
+          >
+            Community Feed
+          </TabsTrigger>
+          <TabsTrigger
+            value="events"
+            className="data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950 data-[state=active]:font-bold rounded-lg transition-all"
+          >
+            Events
+          </TabsTrigger>
+          <TabsTrigger
+            value="partners"
+            className="data-[state=active]:bg-emerald-500 data-[state=active]:text-emerald-950 data-[state=active]:font-bold rounded-lg transition-all"
+          >
+            NGO Partners
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="feed">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
               {/* Create Post Card */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Share with the Community</CardTitle>
-                </CardHeader>
+              <div className="glass-panel p-6 rounded-2xl border border-emerald-500/25">
+                <h3 className="text-base font-bold text-foreground mb-4">Share with the Community</h3>
+
                 <CardContent>
                   <div className="flex gap-4">
                     <Avatar>
@@ -166,13 +202,14 @@ export default function CommunityPage() {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="flex justify-end">
-                  <Button className="bg-green-600 hover:bg-green-700">
+                <CardFooter className="flex justify-end pt-3">
+                  <Button className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-emerald-950 font-bold shadow-[0_0_15px_rgba(16,185,129,0.3)]">
                     <Send className="mr-2 h-4 w-4" />
                     Post
                   </Button>
                 </CardFooter>
-              </Card>
+              </div>
+
 
               {/* Community Feed Posts */}
               {communityPosts.map((post) => (
